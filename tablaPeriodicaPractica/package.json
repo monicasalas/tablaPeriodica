@@ -1,0 +1,19 @@
+{
+  "name": "tablaperiodica",
+  "version": "1.0.0",
+  "description": "Este proyecto nos ayudará a organizar, hacer búsquedas y crear usuarios para obtener elementos de la tabla periódica",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Mónica Janeth Salas Rodríguez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.13",
+    "pg": "^8.7.1",
+    "sequelize": "^6.7.0"
+  }
+}
