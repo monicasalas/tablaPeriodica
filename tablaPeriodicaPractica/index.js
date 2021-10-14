@@ -16,7 +16,9 @@ db.sequelize.sync();
     console.log('Tablas restablecidas')
 }); */
 
+app.use(morgan("dev"));
 
+app.use(express.json({limit : "50mb"}))
 
 app.use("/tablaperiodica", link)
 
