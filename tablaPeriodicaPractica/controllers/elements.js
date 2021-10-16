@@ -63,9 +63,9 @@ exports.updateElement = async(req, res) =>{
             where:{id: params.id},
         })
 
-        if(!validate) return res.status(404).send({message: 'No se encontró el miembro' })
+        if(!validate) return res.status(404).send({message: 'No se encontró el elemento' })
         if(validate.statusDelete===true)
-            return res.status(404).send({message:'No se encontré el miembro'})
+            return res.status(404).send({message:'No se encontré el elemento'})
         
         validate.nameE = body.nameE,
         validate.symbol = body.symbol,
