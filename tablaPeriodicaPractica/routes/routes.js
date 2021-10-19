@@ -5,6 +5,7 @@ const link = express.Router();
 const elements = require("../controllers/elements");
 const group = require('../controllers/groups');
 const period = require('../controllers/periods')
+const elementType = require('../controllers/elementTypes')
 
 link
     .route("/elements")
@@ -35,5 +36,15 @@ link
     .route("/periods/:id")
     .put(period.updatePeriod)
     .delete(period.deletePeriod)
+
+link
+    .route("/element-Type")
+    .get(elementType.getElementTypes)
+    .post(elementType.createElementTypes)
+
+link
+    .route("/element-Type/:id")
+    .put(elementType.updateElementType)
+    .delete(elementType.deleteElementType)
 
 module.exports = link;
