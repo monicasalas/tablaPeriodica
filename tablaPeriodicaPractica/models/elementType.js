@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const ElementType = sequelize.define('elementType',{
-        elemType:{
+        elementType:{
             type : Sequelize.STRING,
         },
         statusDelete:{
