@@ -17,6 +17,7 @@ db.element = require('./element')(sequelize, Sequelize);
 db.group = require('./group')(sequelize, Sequelize);
 db.period = require('./period')(sequelize, Sequelize);
 db.elementType = require('./elementType')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
 
 
 
