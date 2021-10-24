@@ -2,8 +2,13 @@ const db = require("../models/index");
 
 const Sequelize = require('sequelize');
 
+const upLoadImage = require("../utils/uploadImage")
+
 const element = db.element;
 
+const elementType = db.elementType;
+const group = db.group;
+const period = db.period;
 
 exports.createElements = async(req, res) => {
    try{
@@ -18,11 +23,18 @@ exports.createElements = async(req, res) => {
         if(!body.atomicMass)
             return res.status(404).send({message:'atomicMass es requerido'})
         
+        let imagen = await upLoadImage.fileUpload(body.image, "/images");
+        
         const create = await element.create({
             nameE:body.nameE,
             symbol:body.symbol,
             atomicNumber:body.atomicNumber,
-            atomicMass: body.atomicMass
+            atomicMass: body.atomicMass,
+            groupId:body.groupId,
+            periodId:body.periodId,
+            elementTypeId:body.elementTypeId,
+            image:imagen,
+
         });
 
         return res.status(201).send({message:'Elemento creado correctamente'});
@@ -38,6 +50,10 @@ exports.getElements = async(req, res) => {
     try{
         const find = await element.findAll({
             where:{statusDelete:false},
+            attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass'],
+            order:[
+                ['atomicNumber', 'ASC']
+            ],
         });
         return res.status(200).send(find)
     }catch(error){

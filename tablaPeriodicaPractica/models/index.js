@@ -19,6 +19,16 @@ db.period = require('./period')(sequelize, Sequelize);
 db.elementType = require('./elementType')(sequelize, Sequelize);
 db.user = require('./user')(sequelize, Sequelize);
 
+//Asociaciones
+db.group.hasMany(db.element)
+db.period.hasMany(db.element)
+db.elementType.hasMany(db.element)
+
+db.element.belongsTo(db.elementType)
+db.element.belongsTo(db.group)
+db.element.belongsTo(db.period)
+
+
 
 
 module.exports = db;

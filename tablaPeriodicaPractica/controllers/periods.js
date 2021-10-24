@@ -3,6 +3,7 @@ const db = require("../models/index");
 const Sequelize = require("sequelize");
 
 const period = db.period;
+const element = db.element;
 
 exports.createPeriod = async(req, res) =>{
 
@@ -29,6 +30,16 @@ exports.getPeriods = async(req, res) =>{
         console.log("Si estoy en la función")
         const find = await period.findAll({
             where:{statusDelete:false},
+            attributes:['layers'],
+            include:[
+                {
+                    model:element,
+                    attributes:['nameE', 'symbol']
+                }
+            ],
+            order:[
+                ['layers', 'ASC']
+            ]
         });
         return res.status(200).send(find)
     } catch (error) {

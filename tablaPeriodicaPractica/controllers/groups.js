@@ -4,6 +4,7 @@ const Sequelize = require("sequelize");
 
 
 const group = db.group;
+const element = db.element;
 
 exports.createGroup = async(req, res) =>{
     try {
@@ -28,6 +29,16 @@ exports.getGroups = async(req, res) =>{
     try {
         const find = await group.findAll({
             where:{statusDelete:false},
+            attributes: ['id', 'valenceElectrons'],
+            include: [
+                {
+                    model:element,
+                    attributes:['nameE', 'symbol'],
+                }
+            ],
+            order:[
+                ['valenceElectrons', 'ASC']
+            ]
         });
         return res.status(200).send(find)
     } catch (error) {

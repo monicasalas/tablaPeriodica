@@ -17,6 +17,10 @@ module.exports = (sequelize, Sequelize) =>{
             type : Sequelize.FLOAT
         },
 
+        image:{
+            type: Sequelize.STRING,
+        },
+
         statusDelete : {
             type : Sequelize.BOOLEAN,
             defaultValue: false,
