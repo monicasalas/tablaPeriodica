@@ -18,7 +18,8 @@ exports.fileUpload = async function(file, namePath){
             true
             );
         }
-
+       
+       
         let extension = response.type.split('/');
         let fileName = `${Date.now()}.${extension[1]}`;
         let fileRoute = `${namePath}/${fileName}`;
