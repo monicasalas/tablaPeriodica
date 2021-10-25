@@ -54,6 +54,23 @@ exports.getElements = async(req, res) => {
             order:[
                 ['atomicNumber', 'ASC']
             ],
+            include:[
+                {
+                    model:group,
+                    attributes:['valenceElectrons'],
+                },
+                {
+                    model:period,
+                    attributes:['layers']
+                },
+                {
+                    model:elementType,
+                    attributes:['elementType']
+                }
+            ],
+            order:[
+                ['atomicNumber', 'ASC']
+            ]
         });
         return res.status(200).send(find)
     }catch(error){

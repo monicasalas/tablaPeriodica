@@ -3,6 +3,9 @@ const db = require("../models/index");
 const Sequelize = require("sequelize");
 
 const elementType = db.elementType
+const group = db.group
+const period =  db.period
+const element = db.element
 
 exports.createElementTypes = async(req, res) => {
     try {
@@ -29,6 +32,27 @@ exports.getElementTypes = async(req, res) =>{
     try {
         const find = await elementType.findAll({
             where:{statusDelete:false},
+            attributes:['id', 'elementType'],
+            
+            include: [
+                {
+                    model:group,
+                    attributes:['valenceElectrons'],
+                },
+                {
+                    model:period,
+                    attributes:['layers'],
+                },
+                {
+                    model:element,
+                    attributes:['nameE', 'atomicNumber'],
+                }
+            ],
+
+           order:[
+                ['id', 'ASC']
+            ] 
+            
         });
         return res.status(200).send(find)
     } catch (error) {
