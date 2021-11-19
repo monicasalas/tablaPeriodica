@@ -1,8 +1,10 @@
 const db = require("../models/index");
 
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-const upLoadImage = require("../utils/uploadImage")
+const upLoadImage = require("../utils/uploadImage");
+const { and } = require("sequelize");
 
 const element = db.element;
 
@@ -22,6 +24,32 @@ exports.createElements = async(req, res) => {
             return res.status(404).send({message: 'atomicNumber es requerido'})
         if(!body.atomicMass)
             return res.status(404).send({message:'atomicMass es requerido'})
+        if(!body.groupId)
+            return res.status(400).send({message:'groupId es requerido'})
+        if(!body.periodId)
+            return res.status(400).send({message:'periodId es requerido'})
+        if(!body.elementTypeId)
+            return res.status(400).send({message:'elementTypeId es requerido'})
+        
+        const findGroup = await group.findOne({
+            where:{id:body.groupId, statusDelete:false}
+        })
+
+        if(!findGroup) return res.status(404).send({message:'Group no encontrado'})
+
+        const findPeriod = await period.findOne({
+            where:{id:body.periodId, statusDelete:false}
+        })
+
+        if(!findPeriod) return res.status(404).send({message:'Period no encontrado'})
+
+        const findTypeElement = await elementType.findOne({
+            where:{id:body.elementTypeId, statusDelete:false}
+        })
+        
+
+        if(!findTypeElement) return res.status(404).send({message:'Type Element no encontrado'})
+        
         
         let imagen = await upLoadImage.fileUpload(body.image, "/images");
         
@@ -46,35 +74,84 @@ exports.createElements = async(req, res) => {
 };
 
 exports.getElements = async(req, res) => {
-    //Búsqueda básica
+    //Búsqueda con parámetros / Query
     try{
+        const {valenceE} = req.query;
+        const {layer} = req.query;
+        const {typeEle} = req.query;
+
+        if(valenceE){
+            const find = await element.findAll({
+                where:{statusDelete:false},
+                attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass'],
+                order:[
+                    ['atomicNumber', 'ASC']
+                ],
+                include:{
+                    model:group,
+                    attributes: ['id', 'valenceElectrons'],
+                    where:{ valenceElectrons: { [Op.iRegexp]: valenceE}},
+                },
+            });
+            return res.status(200).send(find)
+        }
+
+        if(layer){
+            const find = await element.findAll({
+                where:{statusDelete:false},
+                attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass'],
+                order:[
+                    ['atomicNumber', 'ASC']
+                ],
+                include:{
+                    model: period,
+                    attributes:['id', 'layers'],
+                    where:{ layers: { [Op.iRegexp]: layer}}
+                    } ,
+            });
+
+            return res.status(200).send(find)
+        }
+
+        if(typeEle){
+            const find = await element.findAll({
+                where:{statusDelete:false},
+                attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass'],
+                order:[
+                    ['atomicNumber', 'ASC']
+                ],
+                include:{
+                    model:elementType,
+                    attributes:['id', 'elementType'],
+                    where:{ elementType: { [Op.iRegexp]: typeEle}}
+                    }, 
+            });
+
+            return res.status(200).send(find)
+        }
+        //Búsqueda básica
         const find = await element.findAll({
             where:{statusDelete:false},
             attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass'],
             order:[
                 ['atomicNumber', 'ASC']
             ],
+            
             include:[
-                {
-                    model:group,
-                    attributes:['valenceElectrons'],
-                },
-                {
-                    model:period,
-                    attributes:['layers']
-                },
-                {
-                    model:elementType,
-                    attributes:['elementType']
-                }
-            ],
-            order:[
-                ['atomicNumber', 'ASC']
+                {model:elementType,
+                attributes:['elementType']},
+                {model: period,
+                attributes:['id', 'layers']},
+                {model: group,
+                attributes:['valenceElectrons']}
+                
             ]
         });
         return res.status(200).send(find)
     }catch(error){
+        console.log(error)
         return res.status(500).send(message.error)
+        
     }
 };
 
@@ -91,9 +168,10 @@ exports.updateElement = async(req, res) =>{
             return res.status(400).send({message:'atomicNumber es requerido'})
         if(!body.atomicMass)
             return res.status(400).send({message:'atomicMass es requerido'})
+       
 
         const validate = await element.findOne({
-            where:{id: params.id},
+            where:{id: params.id, statusDelete:false},
         })
 
         if(!validate) return res.status(404).send({message: 'No se encontró el elemento' })

@@ -3,8 +3,6 @@ const db = require("../models/index");
 const Sequelize = require("sequelize");
 
 const elementType = db.elementType
-const group = db.group
-const period =  db.period
 const element = db.element
 
 exports.createElementTypes = async(req, res) => {
@@ -33,22 +31,6 @@ exports.getElementTypes = async(req, res) =>{
         const find = await elementType.findAll({
             where:{statusDelete:false},
             attributes:['id', 'elementType'],
-            
-            include: [
-                {
-                    model:group,
-                    attributes:['valenceElectrons'],
-                },
-                {
-                    model:period,
-                    attributes:['layers'],
-                },
-                {
-                    model:element,
-                    attributes:['nameE', 'atomicNumber'],
-                }
-            ],
-
            order:[
                 ['id', 'ASC']
             ] 
@@ -71,7 +53,7 @@ exports.updateElementType = async(req,res) =>{
             return res.status(400).send({message:'elementType es requerido'})
 
         const validate = await elementType.findOne({
-            where:{id: params.id},
+            where:{id: params.id, statusDelete:false},
         })
 
         if(!validate) return res.status(404).send({message:'No se encontró el tipo de elemento'})

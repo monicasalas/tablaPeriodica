@@ -31,12 +31,6 @@ exports.getPeriods = async(req, res) =>{
         const find = await period.findAll({
             where:{statusDelete:false},
             attributes:['layers'],
-            include:[
-                {
-                    model:element,
-                    attributes:['nameE', 'symbol']
-                }
-            ],
             order:[
                 ['layers', 'ASC']
             ]
@@ -61,7 +55,7 @@ exports.updatePeriod = async(req, res) =>{
             return res.status(400).send({message:'layers es requerido'})
 
         const validate = await period.findOne({
-            where:{id:params.id},
+            where:{id:params.id, statusDelete:false },
         }) 
 
         if(!validate) return res.status(404).send({message:'No se encontró el periodo'})

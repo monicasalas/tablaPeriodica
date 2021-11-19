@@ -20,6 +20,7 @@ exports.createGroup = async(req, res) =>{
         return res.status(201).send({message:"Grupo creado correctamente"});
 
     } catch (error) {
+        console.log(error)
         return res.status(500).send(error.message)
     }
 };
@@ -30,12 +31,6 @@ exports.getGroups = async(req, res) =>{
         const find = await group.findAll({
             where:{statusDelete:false},
             attributes: ['id', 'valenceElectrons'],
-            include: [
-                {
-                    model:element,
-                    attributes:['nameE', 'symbol'],
-                }
-            ],
             order:[
                 ['valenceElectrons', 'ASC']
             ]
@@ -57,7 +52,7 @@ exports.updateGroup = async(req, res) =>{
         if(!body.valenceElectrons) return res.status(400).send({message:"valenceElectrons es requerido"})
 
         const validate = await group.findOne({
-            where:{ id:params.id },
+            where:{ id:params.id,  statusDelete:false},
         });
 
         if(!validate) return res.status(404).send({message:"No se encontró el grupo"})
