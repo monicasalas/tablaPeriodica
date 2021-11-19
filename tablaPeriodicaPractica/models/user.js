@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize)=>{
             type: Sequelize.STRING,
         },
         rol:{
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER,
         },
 
         statusDelete:{

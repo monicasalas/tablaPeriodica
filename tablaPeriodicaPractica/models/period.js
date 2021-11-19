@@ -2,7 +2,7 @@ module.exports = (sequelize, Sequelize)=>{
     const Period = sequelize.define('period',{
 
         layers:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.STRING,
         },
 
         statusDelete:{

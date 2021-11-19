@@ -2,6 +2,8 @@ const db = require("../models/index");
 
 const Sequelize = require("sequelize");
 
+const bcrypt = require('bcryptjs')
+
 const user = db.user
 
 exports.createUsers = async(req, res) =>{
@@ -14,14 +16,18 @@ exports.createUsers = async(req, res) =>{
             return res.status(404).send({message:'lastName es requerido'})
         if(!body.email)
             return res.status(404).send({message:'email es requerido'})
-       /*  if(!body.password)
-            return res.status(404).send({message:'password es requerido'}) */
+        if(!body.password)
+            return res.status(404).send({message:'password es requerido'}) 
         
+        let encriptedPassword = bcrypt.hashSync(body.password, 10)
+
+        console.log('el hash a guardar', encriptedPassword)
+
         const create = await user.create({
             name:body.name,
             lastName: body.lastName,
             email:body.email,
-            //password
+            password:encriptedPassword,
         })
         return res.status(201).send({message:'Usuario creado correctamente'});
     } catch (error) {
@@ -58,7 +64,7 @@ exports.updateUser = async(req, res) =>{
             return res.status(404).send({message:'email es requerido'})
 
         const validate = await user.findOne({
-            where:{id : params.id},
+            where:{id : params.id, statusDelete:false},
         })
 
         if(!validate) return res.status(404).send({message:'No se encontró el usuario'})

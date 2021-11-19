@@ -24,10 +24,15 @@ db.group.hasMany(db.element)
 db.period.hasMany(db.element)
 db.elementType.hasMany(db.element)
 
+/* db.elementType.hasMany(db.period)
+db.elementType.hasMany(db.group) */
+
 db.element.belongsTo(db.elementType)
 db.element.belongsTo(db.group)
 db.element.belongsTo(db.period)
 
+/* db.group.belongsTo(db.elementType)
+db.period.belongsTo(db.elementType) */
 
 
 
