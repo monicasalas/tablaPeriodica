@@ -3,6 +3,7 @@ const db = require("../models/index");
 const Sequelize = require("sequelize");
 
 const elementType = db.elementType
+const element = db.element
 
 exports.createElementTypes = async(req, res) => {
     try {
@@ -29,6 +30,11 @@ exports.getElementTypes = async(req, res) =>{
     try {
         const find = await elementType.findAll({
             where:{statusDelete:false},
+            attributes:['id', 'elementType'],
+           order:[
+                ['id', 'ASC']
+            ] 
+            
         });
         return res.status(200).send(find)
     } catch (error) {
@@ -47,7 +53,7 @@ exports.updateElementType = async(req,res) =>{
             return res.status(400).send({message:'elementType es requerido'})
 
         const validate = await elementType.findOne({
-            where:{id: params.id},
+            where:{id: params.id, statusDelete:false},
         })
 
         if(!validate) return res.status(404).send({message:'No se encontró el tipo de elemento'})
