@@ -2,7 +2,7 @@ module.exports = (sequelize, Sequelize)=>{
     const Group = sequelize.define('group',{
 
         valenceElectrons:{
-            type:Sequelize.INTEGER,
+            type:Sequelize.STRING,
         },
 
         statusDelete:{
