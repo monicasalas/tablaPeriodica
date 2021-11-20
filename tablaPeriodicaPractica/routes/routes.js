@@ -7,57 +7,61 @@ const group = require('../controllers/groups');
 const period = require('../controllers/periods')
 const elementType = require('../controllers/elementTypes');
 const user = require('../controllers/users');
+const generalities = require('../controllers/generalities')
 
+const {verifyToken} = require('../middleware/authorization')
 
 link
     .route("/elements")
     .get(elements.getElements)
-    .post(elements.createElements);
+    .post( verifyToken, elements.createElements);
 
 link
     .route("/elements/:id")
-    .put(elements.updateElement)
-    .delete(elements.deleteElement)
+    .put(verifyToken, elements.updateElement)
+    .delete(verifyToken, elements.deleteElement)
 
 link
     .route("/groups")
     .get(group.getGroups)
-    .post(group.createGroup)
+    .post(verifyToken, group.createGroup)
 
 link
     .route("/groups/:id")
-    .put(group.updateGroup)
-    .delete(group.deleteGroup)
+    .put(verifyToken, group.updateGroup)
+    .delete(verifyToken, group.deleteGroup)
 
 link
     .route("/periods")
     .get(period.getPeriods)
-    .post(period.createPeriod)
+    .post(verifyToken, period.createPeriod)
 
 link
     .route("/periods/:id")
-    .put(period.updatePeriod)
-    .delete(period.deletePeriod)
+    .put(verifyToken, period.updatePeriod)
+    .delete(verifyToken, period.deletePeriod)
 
 link
     .route("/element-Type")
     .get(elementType.getElementTypes)
-    .post(elementType.createElementTypes)
+    .post(verifyToken, elementType.createElementTypes)
 
 link
     .route("/element-Type/:id")
-    .put(elementType.updateElementType)
-    .delete(elementType.deleteElementType)
+    .put(verifyToken, elementType.updateElementType)
+    .delete(verifyToken, elementType.deleteElementType)
 
 link
     .route("/user")
-    .get(user.getUsers)
+    .get(verifyToken,user.getUsers)
     .post(user.createUsers)
 
 link
     .route("/user/:id")
-    .put(user.updateUser)
-    .delete(user.deleteUser)
+    .put(verifyToken, user.updateUser)
+    .delete(verifyToken, user.deleteUser)
 
+link
+    .route("/login").post(generalities.login)
 
 module.exports = link;
