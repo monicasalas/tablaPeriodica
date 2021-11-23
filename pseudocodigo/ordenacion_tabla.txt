@@ -1,0 +1,70 @@
+
+tabla_periodica(elementos[], tipo_ordenacion())
+
+elemento={
+    nombre: '',
+	simbolo:'',
+	numero_atomico:'',
+	masa_atomica:'',
+	periodo:'',
+	grupo:'',
+	categoria:'',
+
+}
+
+
+tipo_ordenacion():
+    tipo 1:
+        categoria()
+    tipo 2:
+        grupo()
+    tipo 3:
+        periodo()
+    tipo 4:
+        elemento()
+
+
+
+categoria(elementos[], tipo)
+    ordenImpresion=0
+    auxiliar=0
+    //algoritmo de burbuja
+    for i=0; i <= elementos-1.categoria; i++
+        for j=0; j <= elementos-1.categoria; j++;
+            if elemento[j].categoria == ordenImpresion:
+            //Verifica de manera Ascendente/Descendete el número atómico
+                elemento(elementos[], orden)
+                print elemento[j]
+            
+
+
+elemento(elementos[], tipo)
+    auxiliar=0
+    case 1:
+        for i=0; i <= elementos-1.numero_atomico; i++
+            for j=0; j <= elementos-1.numero_atomico; j++;
+                if elementos[j].numero_atomico > elementos[j+1].numero_atomico
+                    auxiliar = elementos[j].numero_atomico
+                    elementos[j].numero_atomico=elementos[j+1].numero_atomico
+                    elementos[j+1].numero_atomico =auxiliar
+        return elementos[j].numero_atomico
+    case 2:
+        for i=0; i <= elementos-1.numero_atomico; i++
+            for j=0; j <= elementos-1.numero_atomico; j++;
+                if elementos[j].numero_atomico < elementos[j+1].numero_atomico
+                    auxiliar = elementos[j].numero_atomico
+                    elementos[j].numero_atomico=elementos[j+1].numero_atomico
+                    elementos[j+1].numero_atomico =auxiliar
+
+        return elementos[j].numero_atomico
+    
+    
+    
+    
+    
+   
+            
+
+
+
+
