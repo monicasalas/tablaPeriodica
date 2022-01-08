@@ -8,15 +8,18 @@ const fileUpload = require('express-fileupload')
 
 const db = require("./models/index")
 
+const cors = require('cors')
 
 
 const app = express();
 
+app.use(cors())
+
 db.sequelize.sync();
 
- /* db.sequelize.sync({force:true}).then ( () =>{
+/* db.sequelize.sync({force:true}).then ( () =>{
     console.log('Tablas restablecidas')
-}); */ 
+}); */
 
 app.use(morgan("dev"));
 
