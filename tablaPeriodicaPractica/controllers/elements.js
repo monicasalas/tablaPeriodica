@@ -132,7 +132,7 @@ exports.getElements = async(req, res) => {
         //Búsqueda básica
         const find = await element.findAll({
             where:{statusDelete:false},
-            attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass'],
+            attributes:['nameE', 'symbol', 'atomicNumber', 'atomicMass', 'statusDelete'],
             order:[
                 ['atomicNumber', 'ASC']
             ],
