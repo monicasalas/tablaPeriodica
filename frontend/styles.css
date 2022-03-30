@@ -40,15 +40,20 @@ body{
     max-width: 750px;
     text-align: center;
     margin: 0 auto;
-    height: 25vh;
+    height: 25vh;   
+    background: white;
+    
+  }
+
+  ul, ol{
     list-style: none;    
-   
   }
 
   .menu li {
     width: 125px;
     height: 50;
     transition: background-position-x 0.9s 
+    
 linear;
         text-align: center;
   
@@ -59,12 +64,46 @@ linear;
         text-decoration: none;
         transition: all 0.45s;
         font: bold;
+        background: white;
+        display: block;
+        z-index: 1000;
+
 
     }
 
 a:hover{
     color: #a8dce7;
     cursor: pointer;
+}
+
+.menu > li{
+    float: left;
+}
+
+.menu li ul{
+    display: none;
+    position: absolute;
+    min-width: 145px;
+
+}
+
+.menu li:hover > ul{
+    display: block;
+}
+
+.menu li ul li{
+    position: relative;
+}
+
+.menu li ul li ul{
+    right: -140px;
+    top: 0px;
+    text-align: left;
+    z-index: 1000;
+}
+
+option{
+    style:none;
 }
 
 .periodo{
@@ -263,6 +302,37 @@ a:hover{
     
 }
 
+/* box2 */
+
+.box2 h3{
+    position:absolute;
+    font-size: 12px;
+    margin-top: 60px;
+    margin-left: 0px;
+}
+.box2 h1{
+    position:absolute;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.box2 h4{
+    font-size: 11px;
+    margin-bottom: 57px;
+    margin-right: 21px ;
+    justify-content:center;
+    align-content: center;
+
+}
+.box2 h2{
+    
+    font-size: 11px;
+    margin-bottom: 50px;
+    
+}
+
+
+/* bo2 */
+
 .etiquetas1{
     display: grid;
     grid-template-columns: repeat(5);
@@ -287,7 +357,7 @@ a:hover{
     margin-left: 55%;
     bottom: 32%;
     grid-gap: 5px;
-
+    
 
 }
 
@@ -378,4 +448,33 @@ a:hover{
 }
 #actinidos{
     background:rgb(53, 167, 72);
+}
+/* filtro*/
+.filtro{
+    position: absolute;
+}
+.etiqueta1{
+    position: relative;
+    margin: 50%;
+    margin-left: 50%;
+}
+#contenido{
+    position: relative;
+    width: 110px;
+    margin-left: 44%;
+    bottom: 3%;
+}
+
+
+filter{
+    display: none;
+}
+
+.transparent{
+    background: white;
+   
+}
+
+a:active > .mtrans{
+    color:green;
 }
