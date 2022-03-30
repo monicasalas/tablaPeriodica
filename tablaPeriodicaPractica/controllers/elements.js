@@ -90,8 +90,8 @@ exports.getElements = async(req, res) => {
                 include:{
                     model:group,
                     attributes: ['id', 'valenceElectrons'],
-                    where:{ valenceElectrons: { [Op.iRegexp]: valenceE}},
-                },
+                    where:{ valenceElectrons: { [Op.eq]: valenceE}},
+                    },
             });
             return res.status(200).send(find)
         }
